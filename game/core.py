@@ -79,7 +79,7 @@ class map:
         self.bullet_list = [bt.get_bullet() for bt in bullet_list]
         self.map_size = map_size
     
-    def evaluate(self):
+    def evaluate(self, player):
         ans = 0
         for bullet in self.bullet_list:
             if abs(bullet.x - player.x) < 10 * player.w and bullet.y - bullet.h < player.y + player.h + 5 and player.y - bullet.y < 10 * player.h:

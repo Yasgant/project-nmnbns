@@ -1,6 +1,7 @@
 from core import *
 from time import time, sleep
 import display
+from enemies import *
 
 class EnemiesData:
     def __init__(self, enemies_data):
@@ -26,6 +27,32 @@ class StageData(EnemiesData):
     def get_enemies(self):
         for enemies in self.enemies_data:
             yield enemies
+    
+    def write_to_file(self, file_name = None):
+        if file_name is None:
+            file_name = './data/' + self.stage_name + '.txt'
+        with open(file_name, 'w+') as f:
+            f.write('StageName: ' + self.stage_name + '\n' + 'Total frames: ' + str(len(self.enemies_data)) + '\n')
+            for frame, enemies in enumerate(self.enemies_data):
+                for enemy in enemies:
+                    f.write(str(frame) + ' ' + enemy.__class__.__name__ + ' ' + str(enemy.__dict__) + '\n')
+    
+    @classmethod
+    def read_from_file(cls, file_name):
+        with open(file_name, 'r') as f:
+            data = f.readlines()
+            stage_name = data[0].split()[1]
+            total_frames = int(data[1].split()[2])
+            enemies_data = [[] for i in range(total_frames)]
+            data = data[2:]
+            for line in data:
+                frame = int(line.split(' ', 2)[0])
+                enemy_name = line.split(' ', 3)[1]
+                line = line[line.index('{') + 1: line.index('}')].split(',')
+                enemy_dict = eval('{' + ','.join(line) + '}')
+                print(enemy_name + '(' + str(enemy_dict) + ')')
+                enemies_data[frame].append(eval(enemy_name + '(**' + str(enemy_dict) + ')'))
+        return cls(stage_name, enemies_data)
 
 
 
