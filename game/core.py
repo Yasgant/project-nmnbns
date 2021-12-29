@@ -1,5 +1,6 @@
 import numpy as np
 from time import time
+import matplotlib.pyplot as plt
 
 class obj:
     def __init__(self, x, y, w, h):
@@ -72,7 +73,7 @@ class Player(obj):
 
 
 
-class map:
+class Map:
     def __init__(self, player, enemy_list = [], bullet_list = [], map_size = (640, 480)):
         self.player = player.intlize()
         self.enemy_list = [ey.get_enemy() for ey in enemy_list]
@@ -88,8 +89,27 @@ class map:
             if abs(enemy.x - player.x) < 10 * player.w and enemy.y - enemy.h < player.y + player.h + 5 and player.y - enemy.y < 10 * player.h:
                 ans -= 10 * player.w - abs(enemy.x - player.x) + 10 * player.h + enemy.y - player.y
         return ans
+    
+    def fill(self):
+        ans = np.zeros(self.map_size)
+        ans[np.int16(self.player.x - self.player.w * 0.5):np.int16(self.player.x + self.player.w * 0.5), np.int16(self.player.y - self.player.h * 0.5):np.int16(self.player.y + self.player.h * 0.5)] = 0.3
+        for enemy in self.enemy_list:
+            ans[np.int16(enemy.x - enemy.w * 0.5):np.int16(enemy.x + enemy.w * 0.5), np.int16(enemy.y - enemy.h * 0.5):np.int16(enemy.y + enemy.h * 0.5)] = 0.7
+        for bullet in self.bullet_list:
+            ans[np.int16(bullet.x - bullet.w * 0.5):np.int16(bullet.x + bullet.w * 0.5), np.int16(bullet.y - bullet.h * 0.5):np.int16(bullet.y + bullet.h * 0.5)] = 0.7
+        return ans
+    
+    def centered_fill(self):
+        ans = np.zeros(self.map_size)
+        for enemy in self.enemy_list:
+            if -self.map_size[0] / 2 <= enemy.x - self.player.x <= self.map_size[0] / 2 and -self.map_size[1] / 2 <= enemy.y - self.player.y <= self.map_size[1] / 2:
+                ans[np.int16(enemy.x - self.player.x + self.map_size[0] / 2), np.int16(enemy.y - self.player.y + self.map_size[1] / 2)] = 1
+        for bullet in self.bullet_list:
+            if -self.map_size[0] / 2 <= bullet.x - self.player.x <= self.map_size[0] / 2 and -self.map_size[1] / 2 <= bullet.y - self.player.y <= self.map_size[1] / 2:
+                ans[np.int16(bullet.x - self.player.x + self.map_size[0] / 2), np.int16(bullet.y - self.player.y + self.map_size[1] / 2)] = 1
+        return ans
 
-class game(map):
+class game(Map):
     def update(self, op = 0):
         def force_in_map(player):
             if player.x < 0:
@@ -123,7 +143,7 @@ class game(map):
         self.bullet_list.append(bullet)
     
     def get_map(self):
-        return map(self.player, self.enemy_list, self.bullet_list, self.map_size)
+        return Map(self.player, self.enemy_list, self.bullet_list, self.map_size)
     
     def play(self, func, FPS = 60):
         score = 0
