@@ -147,18 +147,17 @@ class game(Map):
     
     def get_enemies(self):
         ans = [0 for i in range(2000)]
+        eys = []
         cnt = 0
         for enemy in self.enemy_list:
-            ans[cnt] = (enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0]
-            ans[cnt + 1000] = (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
-            if ans[cnt] < 0.25 or np.random.random() > np.max(np.fabs(ans[cnt]), np.fabs(ans[cnt + 1000])):
-                cnt += 1
-            if cnt == 1000:
-                return ans
+            eys.append(((enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0], (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]))
         for bullet in self.bullet_list:
-            ans[cnt] = (bullet.x - self.player.x + self.map_size[0]) / (2 * self.map_size[0])
-            ans[cnt + 1000] = (bullet.y - self.player.y + self.map_size[1]) / (2 * self.map_size[1])
-            if ans[cnt] < 0.25 or np.random.random() > np.max(np.fabs(ans[cnt]), np.fabs(ans[cnt + 1000])):
+            eys.append(((bullet.x - self.player.x + self.map_size[0] / 2) / self.map_size[0], (bullet.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]))
+        eys.sort(key = lambda x: min(abs(x[0]), abs(x[1])))
+        for ey in eys:
+            ans[cnt] = ey[0]
+            ans[cnt + 1000] = ey[1]
+            if np.random.random() > min(abs(ey[0]), abs(ey[1])) * 0.5 - 0.125:
                 cnt += 1
             if cnt == 1000:
                 return ans
