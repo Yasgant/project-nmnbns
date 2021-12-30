@@ -88,6 +88,12 @@ class Map:
         for enemy in self.enemy_list:
             if abs(enemy.x - self.player.x) < 10 * self.player.w and enemy.y - enemy.h < self.player.y + self.player.h + 5 and self.player.y - enemy.y < 10 * self.player.h:
                 ans -= 10 * self.player.w - abs(enemy.x - self.player.x) + 10 * self.player.h + enemy.y - self.player.y
+        if self.player.y < 240:
+            ans -= 100
+        if min(self.map_size[0] - self.player.x, self.player.x) < 5:
+            ans -= 200 - 40 * min(self.map_size[0] - self.player.x, self.player.x)
+        if min(self.map_size[1] - self.player.y, self.player.y) < 5:
+            ans -= 200 - 40 * min(self.map_size[1] - self.player.y, self.player.y)
         return ans
     
     def fill(self):
@@ -122,7 +128,7 @@ class game(Map):
                 player.y = self.map_size[1]
         
         def in_map(obj):
-            return 0 <= obj.x <= self.map_size[0] and 0 <= obj.y <= self.map_size[1]
+            return -10 <= obj.x <= self.map_size[0]+10 and -10 <= obj.y <= self.map_size[1]+10
 
         for enemy in self.enemy_list:
             enemy.update()
@@ -148,7 +154,8 @@ class game(Map):
     def get_enemies(self):
         ans = [0 for i in range(2000)]
         eys = []
-        cnt = 0
+        ans[0], ans[1000] = self.player.x / self.map_size[0], self.player.y / self.map_size[1]
+        cnt = 1
         for enemy in self.enemy_list:
             eys.append(((enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0], (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]))
         for bullet in self.bullet_list:

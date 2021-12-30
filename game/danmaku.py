@@ -190,6 +190,7 @@ class Replay(game_with_op):
     def play_video(self, FPS = 60):
         enemies_gen = self.stage_data.get_enemies()
         ct = -1
+        self.get_enemies()
         while True:
             ct += 1
             stt = time()
