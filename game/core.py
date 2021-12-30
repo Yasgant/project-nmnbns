@@ -146,23 +146,21 @@ class game(Map):
         return Map(self.player, self.enemy_list, self.bullet_list, self.map_size)
     
     def get_enemies(self):
-        ans = [0 for i in range(10000)]
+        ans = [0 for i in range(2000)]
         cnt = 0
         for enemy in self.enemy_list:
             ans[cnt] = (enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0]
-            ans[cnt + 2500] = (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
-            ans[cnt + 5000] = enemy.w / 10
-            ans[cnt + 7500] = enemy.h / 10
-            cnt += 1
-            if cnt == 2500:
+            ans[cnt + 1000] = (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
+            if ans[cnt] < 0.25 or np.random.random() > np.max(np.fabs(ans[cnt]), np.fabs(ans[cnt + 1000])):
+                cnt += 1
+            if cnt == 1000:
                 return ans
         for bullet in self.bullet_list:
-            ans[cnt] = (bullet.x - self.player.x + self.map_size[0] / 2) / self.map_size[0]
-            ans[cnt + 2500] = (bullet.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
-            ans[cnt + 5000] = bullet.w / 10
-            ans[cnt + 7500] = bullet.h / 10
-            cnt += 1
-            if cnt == 2500:
+            ans[cnt] = (bullet.x - self.player.x + self.map_size[0]) / (2 * self.map_size[0])
+            ans[cnt + 1000] = (bullet.y - self.player.y + self.map_size[1]) / (2 * self.map_size[1])
+            if ans[cnt] < 0.25 or np.random.random() > np.max(np.fabs(ans[cnt]), np.fabs(ans[cnt + 1000])):
+                cnt += 1
+            if cnt == 1000:
                 return ans
         return ans
     

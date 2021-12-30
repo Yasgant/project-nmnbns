@@ -38,5 +38,6 @@ data.insert(1500, RandomEnemy(320, 100, shoot_time = 5, bullet_speed=5, alive_ti
 # 2500 ~ 3500
 data.insert(2500, RandomEnemyWithFall(320, 100, shoot_time = 5, bullet_speed=5, alive_time=7*60))
 
-G = game_with_play(Player(320, 400), data)
-print(G.play())
+rep = OpReplay.read_from_file('./data/replay.txt')
+G = Replay(Player(320, 400), data, rep)
+print(G.play_video())
