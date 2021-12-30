@@ -132,7 +132,7 @@ class game_with_op(game):
                 player.y = self.map_size[1]
         
         def in_map(obj):
-            return 0 <= obj.x < self.map_size[0] and 0 <= obj.y < self.map_size[1]
+            return -10 <= obj.x < self.map_size[0]+10 and -10 <= obj.y < self.map_size[1]+10
 
         for enemy in self.enemy_list:
             bullets = enemy.update(self.player)
@@ -188,24 +188,16 @@ class Replay(game_with_op):
 
     
     def play_video(self, FPS = 60):
-        enemies_gen = self.stage_data.get_enemies()
         ct = -1
-        self.get_enemies()
         while True:
             ct += 1
             stt = time()
-            try:
-                enemies = next(enemies_gen)
-            except StopIteration:
-                return False
-            for enemy in enemies:
-                self.insert_enemy(enemy)
             op = self.op_list.op_list[ct]
-            if not self.update(op):
+            if self.op(op)[1]:
                 return True
             display.display_game(self)
             edt = time()
             if edt - stt < 1 / FPS:
                 sleep(max(1 / FPS - edt + stt - 0.0003, 0))
             edt2 = time()
-            print('Frame: {}'.format(ct))
+            print('Frame: {}'.format(ct+1))

@@ -90,10 +90,10 @@ class Map:
                 ans -= 10 * self.player.w - abs(enemy.x - self.player.x) + 10 * self.player.h + enemy.y - self.player.y
         if self.player.y < 240:
             ans -= 100
-        if min(self.map_size[0] - self.player.x, self.player.x) < 5:
-            ans -= 200 - 40 * min(self.map_size[0] - self.player.x, self.player.x)
-        if min(self.map_size[1] - self.player.y, self.player.y) < 5:
-            ans -= 200 - 40 * min(self.map_size[1] - self.player.y, self.player.y)
+        if min(self.map_size[0] - self.player.x, self.player.x) < 10:
+            ans -= 1000 - 100 * min(self.map_size[0] - self.player.x, self.player.x)
+        if min(self.map_size[1] - self.player.y, self.player.y) < 10:
+            ans -= 1000 - 100 * min(self.map_size[1] - self.player.y, self.player.y)
         return ans
     
     def fill(self):
@@ -151,20 +151,36 @@ class game(Map):
     def get_map(self):
         return Map(self.player, self.enemy_list, self.bullet_list, self.map_size)
     
+    def get_img(self):
+        ans = np.zeros((self.map_size[0] / 4, self.map_size[1] / 4))
+        for enemy in self.enemy_list:
+            ans[round(enemy.x / 4), round(enemy.y / 4)] = 0.7
+        for bullet in self.bullet_list:
+            ans[round(bullet.x / 4), round(bullet.y / 4)] = 0.7
+        ans[round(self.player.x / 4), round(self.player.y / 4)] = 0.3
+        return ans
+    
     def get_enemies(self):
         ans = [0 for i in range(2000)]
         eys = []
-        ans[0], ans[1000] = self.player.x / self.map_size[0], self.player.y / self.map_size[1]
+        if self.player.x > self.map_size[0] / 2:
+            ans[0] = 0.501 + (self.map_size[0] - self.player.x) / self.map_size[0]
+        else:
+            ans[0] = 0.499 - (self.player.x) / self.map_size[0]
+        if self.player.y > self.map_size[1] / 2:
+            ans[1000] = 0.501 + (self.map_size[1] - self.player.y) / self.map_size[1]
+        else:
+            ans[1000] = 0.499 - (self.player.y) / self.map_size[1]
         cnt = 1
         for enemy in self.enemy_list:
-            eys.append(((enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0], (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]))
+            eys.append(((1.0*enemy.x - self.player.x + self.map_size[0] ) / (2*self.map_size[0]), (1.0*enemy.y - self.player.y + self.map_size[1] ) / (2*self.map_size[1])))
         for bullet in self.bullet_list:
-            eys.append(((bullet.x - self.player.x + self.map_size[0] / 2) / self.map_size[0], (bullet.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]))
-        eys.sort(key = lambda x: min(abs(x[0]), abs(x[1])))
+            eys.append(((1.0*bullet.x - self.player.x + self.map_size[0] ) / (2*self.map_size[0]), (1.0*bullet.y - self.player.y + self.map_size[1] ) / (2*self.map_size[1])))
+        eys.sort(key = lambda x: min(abs(x[0] - 0.5), abs(x[1] - 0.5)))
         for ey in eys:
             ans[cnt] = ey[0]
             ans[cnt + 1000] = ey[1]
-            if np.random.random() > min(abs(ey[0]), abs(ey[1])) * 0.5 - 0.125:
+            if np.random.random() > min(abs(ey[0] - 0.5), abs(ey[1] - 0.5)) * 0.5 - 0.125:
                 cnt += 1
             if cnt == 1000:
                 return ans
