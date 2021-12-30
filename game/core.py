@@ -80,14 +80,14 @@ class Map:
         self.bullet_list = [bt.get_bullet() for bt in bullet_list]
         self.map_size = map_size
     
-    def evaluate(self, player):
-        ans = 0
+    def evaluate(self):
+        ans = 200
         for bullet in self.bullet_list:
-            if abs(bullet.x - player.x) < 10 * player.w and bullet.y - bullet.h < player.y + player.h + 5 and player.y - bullet.y < 10 * player.h:
-                ans -= 10 * player.w - abs(bullet.x - player.x) + 10 * player.h + bullet.y - player.y
+            if abs(bullet.x - self.player.x) < 10 * self.player.w and bullet.y - bullet.h < self.player.y + self.player.h + 5 and self.player.y - bullet.y < 10 * self.player.h:
+                ans -= 10 * self.player.w - abs(bullet.x - self.player.x) + 10 * self.player.h + bullet.y - self.player.y
         for enemy in self.enemy_list:
-            if abs(enemy.x - player.x) < 10 * player.w and enemy.y - enemy.h < player.y + player.h + 5 and player.y - enemy.y < 10 * player.h:
-                ans -= 10 * player.w - abs(enemy.x - player.x) + 10 * player.h + enemy.y - player.y
+            if abs(enemy.x - self.player.x) < 10 * self.player.w and enemy.y - enemy.h < self.player.y + self.player.h + 5 and self.player.y - enemy.y < 10 * self.player.h:
+                ans -= 10 * self.player.w - abs(enemy.x - self.player.x) + 10 * self.player.h + enemy.y - self.player.y
         return ans
     
     def fill(self):
@@ -144,6 +144,27 @@ class game(Map):
     
     def get_map(self):
         return Map(self.player, self.enemy_list, self.bullet_list, self.map_size)
+    
+    def get_enemies(self):
+        ans = [0 for i in range(10000)]
+        cnt = 0
+        for enemy in self.enemy_list:
+            ans[cnt] = (enemy.x - self.player.x + self.map_size[0] / 2) / self.map_size[0]
+            ans[cnt + 2500] = (enemy.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
+            ans[cnt + 5000] = enemy.w / 10
+            ans[cnt + 7500] = enemy.h / 10
+            cnt += 1
+            if cnt == 2500:
+                return ans
+        for bullet in self.bullet_list:
+            ans[cnt] = (bullet.x - self.player.x + self.map_size[0] / 2) / self.map_size[0]
+            ans[cnt + 2500] = (bullet.y - self.player.y + self.map_size[1] / 2) / self.map_size[1]
+            ans[cnt + 5000] = bullet.w / 10
+            ans[cnt + 7500] = bullet.h / 10
+            cnt += 1
+            if cnt == 2500:
+                return ans
+        return ans
     
     def play(self, func, FPS = 60):
         score = 0

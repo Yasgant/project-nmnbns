@@ -12,7 +12,7 @@ class AimmingEnemy(Enemy):
         y = self.y - player.y
         return np.arctan2(y, x) - np.pi
     
-    def shoot(self, player, v = 2):
+    def shoot(self, player, v = 20):
         arc = self.get_arc(player)
         return [obj_bullet(self.x, self.y, 4, 4, v * np.cos(arc), v * np.sin(arc), 0, 0)]
     
@@ -35,7 +35,7 @@ class AimmingEnemy3(Enemy):
         y = self.y - player.y
         return np.arctan2(y, x) - np.pi
     
-    def shoot(self, player, v = 2):
+    def shoot(self, player, v = 20):
         arc = self.get_arc(player)
         bullets = []
         bullets.append(obj_bullet(self.x, self.y, 4, 4, v * np.cos(arc), v * np.sin(arc), 0, 0))
@@ -62,7 +62,7 @@ class AimmingEnemy14(Enemy):
         y = self.y - player.y
         return np.arctan2(y, x) - np.pi
     
-    def shoot(self, player, v = 2):
+    def shoot(self, player, v = 20):
         arc = self.get_arc(player)
         bullets = []
         arc -= np.pi * 7 / 18
