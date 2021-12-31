@@ -57,7 +57,7 @@ def take_action(action):
         press(set([kb.up_key, kb.left_key]))
 
 def get_img():
-    img = np.zeros(state_size)
+    img = np.zeros(state_size[:2])
     enemies = getdata.GetEnemies()
     for i in range(0, len(enemies), 2):
         img[round(enemies[i] / 4), round(enemies[i+1] / 4)] = 0.7
