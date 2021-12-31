@@ -1,14 +1,16 @@
-import getdata
+import _getdata as getdata
 import tensorflow as tf
 import numpy as np
 from time import time, sleep
 from collections import deque
-import pykeyboard
+import ctypes
+import win32api
+import win32con
 
 
 stack_size = 4
 state_size = (101, 121, stack_size)
-FPS = 60
+FPS = 6
 
 model = tf.keras.models.load_model('./data/model')
 
@@ -23,38 +25,58 @@ def stack_img(stacked_imgs, img, fir = False):
 
 if not getdata.init():
     raise Exception('Cannot connect to game')
-kb = pykeyboard.PyKeyboard()
+MapVirtualKey = ctypes.windll.user32.MapVirtualKeyA
+
+def press_key(x):
+    if x == 'l':
+        win32api.keybd_event(0x25, MapVirtualKey(0x25, 0), 0, 0)
+    elif x == 'r':
+        win32api.keybd_event(0x27, MapVirtualKey(0x27, 0), 0, 0)
+    elif x == 'u':
+        win32api.keybd_event(0x26, MapVirtualKey(0x26, 0), 0, 0)
+    elif x == 'd':
+        win32api.keybd_event(0x28, MapVirtualKey(0x28, 0), 0, 0)
+
+def release_key(x):
+    if x == 'l':
+        win32api.keybd_event(0x25, MapVirtualKey(0x25, 0), win32con.KEYEVENTF_KEYUP, 0)
+    elif x == 'r':
+        win32api.keybd_event(0x27, MapVirtualKey(0x27, 0), win32con.KEYEVENTF_KEYUP, 0)
+    elif x == 'u':
+        win32api.keybd_event(0x26, MapVirtualKey(0x26, 0), win32con.KEYEVENTF_KEYUP, 0)
+    elif x == 'd':
+        win32api.keybd_event(0x28, MapVirtualKey(0x28, 0), win32con.KEYEVENTF_KEYUP, 0)
 
 now = set()
 def press(new):
     global now
     for i in new:
         if i not in now:
-            kb.press_key(i)
+            press_key(i)
     for i in now:
         if i not in new:
-            kb.release_key(i)
+            release_key(i)
     now = new
 
 def take_action(action):
     if action == 0:
         press(set())
     elif action == 1:
-        press(set([kb.left_key]))
+        press(set(['l']))
     elif action == 2:
-        press(set([kb.left_key, kb.down_key]))
+        press(set(['l', 'd']))
     elif action == 3:
-        press(set([kb.down_key]))
+        press(set(['d']))
     elif action == 4:
-        press(set([kb.down_key, kb.right_key]))
+        press(set(['d', 'r']))
     elif action == 5:
-        press(set([kb.right_key]))
+        press(set(['r']))
     elif action == 6:
-        press(set([kb.right_key, kb.up_key]))
+        press(set(['r', 'u']))
     elif action == 7:
-        press(set([kb.up_key]))
+        press(set(['u']))
     elif action == 8:
-        press(set([kb.up_key, kb.left_key]))
+        press(set(['u', 'l']))
 
 def get_img():
     img = np.zeros(state_size[:2])
@@ -73,7 +95,7 @@ sleep(2)
 standard_time = 1/FPS
 while True:
     stt = time()
-    img = stack_img(stacked_imgs, get_img())
+    img, stacked_imgs = stack_img(stacked_imgs, get_img())
     action = np.argmax(model.predict(np.array([img]))[0])
     take_action(action)
     edt = time()

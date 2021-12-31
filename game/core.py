@@ -1,6 +1,5 @@
 import numpy as np
 from time import time
-import matplotlib.pyplot as plt
 
 class obj:
     def __init__(self, x, y, w, h):
