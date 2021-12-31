@@ -83,12 +83,12 @@ class Map:
     def evaluate(self):
         ans = 200
         for bullet in self.bullet_list:
-            if abs(bullet.x - self.player.x) < 10 * self.player.w and bullet.y - bullet.h < self.player.y + self.player.h + 5 and self.player.y - bullet.y < 10 * self.player.h:
-                ans -= 10 * self.player.w - abs(bullet.x - self.player.x) + 10 * self.player.h + bullet.y - self.player.y
+            if abs(bullet.x - self.player.x) < 20 * self.player.w and bullet.y - bullet.h < self.player.y + self.player.h + 5 and self.player.y - bullet.y < 20 * self.player.h:
+                ans -= (20 * self.player.w - abs(bullet.x - self.player.x) + 20 * self.player.h + bullet.y - self.player.y) * 0.1
         for enemy in self.enemy_list:
-            if abs(enemy.x - self.player.x) < 10 * self.player.w and enemy.y - enemy.h < self.player.y + self.player.h + 5 and self.player.y - enemy.y < 10 * self.player.h:
-                ans -= 10 * self.player.w - abs(enemy.x - self.player.x) + 10 * self.player.h + enemy.y - self.player.y
-        if self.player.y < 240:
+            if abs(enemy.x - self.player.x) < 20 * self.player.w and enemy.y - enemy.h < self.player.y + self.player.h + 5 and self.player.y - enemy.y < 20 * self.player.h:
+                ans -= (20 * self.player.w - abs(enemy.x - self.player.x) + 20 * self.player.h + enemy.y - self.player.y) * 0.1
+        if self.player.y < self.map_size[1] / 2:
             ans -= 100
         if min(self.map_size[0] - self.player.x, self.player.x) < 10:
             ans -= 1000 - 100 * min(self.map_size[0] - self.player.x, self.player.x)
