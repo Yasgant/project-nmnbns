@@ -152,11 +152,15 @@ class game(Map):
         return Map(self.player, self.enemy_list, self.bullet_list, self.map_size)
     
     def get_img(self):
-        ans = np.zeros((self.map_size[0] / 4, self.map_size[1] / 4))
+        def in_map(obj):
+            return 0 <= obj.x <= self.map_size[0] and 0 <= obj.y <= self.map_size[1]
+        ans = np.zeros((round(self.map_size[0] / 4) + 1, round(self.map_size[1] / 4) + 1))
         for enemy in self.enemy_list:
-            ans[round(enemy.x / 4), round(enemy.y / 4)] = 0.7
+            if in_map(enemy):
+                ans[round(enemy.x / 4), round(enemy.y / 4)] = 0.7
         for bullet in self.bullet_list:
-            ans[round(bullet.x / 4), round(bullet.y / 4)] = 0.7
+            if in_map(bullet):
+                ans[round(bullet.x / 4), round(bullet.y / 4)] = 0.7
         ans[round(self.player.x / 4), round(self.player.y / 4)] = 0.3
         return ans
     
