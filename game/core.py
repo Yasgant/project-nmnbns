@@ -74,7 +74,7 @@ class Player(obj):
 
 
 class Map:
-    def __init__(self, player, enemy_list = [], bullet_list = [], map_size = (640, 480)):
+    def __init__(self, player, enemy_list = [], bullet_list = [], map_size = (400, 480)):
         self.player = player.intlize()
         self.enemy_list = [ey.get_enemy() for ey in enemy_list]
         self.bullet_list = [bt.get_bullet() for bt in bullet_list]

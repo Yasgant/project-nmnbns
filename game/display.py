@@ -8,7 +8,7 @@ from danmaku import *
 
 def display_game(map):
     def get_blank_img():
-        return np.zeros((480, 640, 3), np.uint8)
+        return np.zeros((480, 400, 3), np.uint8)
     img = get_blank_img()
     img.fill(255)
     for enemy in map.enemy_list:
