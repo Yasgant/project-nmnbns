@@ -91,9 +91,9 @@ class Map:
         if self.player.y < self.map_size[1] / 2:
             ans -= 100
         if min(self.map_size[0] - self.player.x, self.player.x) < 10:
-            ans -= 1000 - 100 * min(self.map_size[0] - self.player.x, self.player.x)
+            ans -= 30 - 3 * min(self.map_size[0] - self.player.x, self.player.x)
         if min(self.map_size[1] - self.player.y, self.player.y) < 10:
-            ans -= 1000 - 100 * min(self.map_size[1] - self.player.y, self.player.y)
+            ans -= 30 - 3 * min(self.map_size[1] - self.player.y, self.player.y)
         return ans
     
     def fill(self):
