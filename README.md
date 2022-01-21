@@ -2,12 +2,30 @@
 
 This project aims to implement an AI that can clear Mountain of Faith with no misses, no bombs, and no shooting.
 
-> All parts are developing...
-12.24 Finished the basic gaming part. Archived some enemies in stage 1.
+##### The project is now paused...
+###### Current situation:
+> Finshed:
+> - The data transfer from game to AI.
+> - The interact module for AI to control the game.
+> - The simulation module to train the AI.
+> - Custom stage data.
+> - Replay module.
+
+> Problem:
+> - The AI trained is not clever enough to finish even the first stage.
 
 
 ## 风神录全避计划
 
 此project将会实现一个能够在风神录无miss无雷并且不射击通关全6面的AI.
-> 项目开发中...
-12.24 完成了基本的游戏部分。完成了部分一面的敌人。
+##### 项目停滞中...
+###### 目前情况：
+> 完成：
+> - 将游戏数据传递给AI
+> - AI对游戏的交互模块
+> - 游戏模拟器
+> - 自定义关卡数据
+> - 回放功能
+
+> 问题：
+> - 训练出的AI太蠢，不能达到避弹要求。
