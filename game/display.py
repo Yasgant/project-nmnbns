@@ -23,9 +23,9 @@ def display_game(map):
 def get_random_bullet():
     return obj_bullet(randint(0, 600), randint(0, 440), 5, 5, randint(-25, 25), randint(-25, 25), randint(-5, 5), randint(-5, 5))
 
-class game_with_display(game):
-    def __init__(self, player):
-        super().__init__(player)
+class game_with_display(game_with_op):
+    def __init__(self, player, stage_data):
+        super().__init__(player, stage_data)
         pygame.init()
         screen = pygame.display.set_mode((int(self.map_size[0] / 2), int(self.map_size[1] / 2)))
         pygame.display.set_caption("Control")
@@ -100,11 +100,8 @@ class game_with_display(game):
                     op = 1
                 elif 'right' in keys:
                     op = 5
-
-            for i in range(randint(0, 3)):
-                self.insert_bullet(get_random_bullet())
-            super().update(op)
-            self.display()
+            super().op(op)
+            display_game(self)
             ed = time()
             if ed - st < 1 / FPS:
                 sleep(max(1 / FPS - ed + st - 0.0002, 0))

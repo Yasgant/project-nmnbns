@@ -7,16 +7,16 @@ from enemies import *
 
 data = StageData.empty('S1',10*60*60)
 # 0 ~ 1000
-data.insert(0, AimmingEnemy3(100, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(9, AimmingEnemy3(110, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(18, AimmingEnemy3(120, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(27, AimmingEnemy3(130, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(36, AimmingEnemy3(140, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(45, AimmingEnemy3(150, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(54, AimmingEnemy3(160, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(63, AimmingEnemy3(170, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(72, AimmingEnemy3(180, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
-data.insert(81, AimmingEnemy3(190, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=5*60))
+data.insert(0, AimmingEnemy3(100, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(9, AimmingEnemy3(110, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(18, AimmingEnemy3(120, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(27, AimmingEnemy3(130, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(36, AimmingEnemy3(140, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(45, AimmingEnemy3(150, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(54, AimmingEnemy3(160, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(63, AimmingEnemy3(170, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(72, AimmingEnemy3(180, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
+data.insert(81, AimmingEnemy3(190, 100, shoot_time = 10, bullet_speed=10, arc = np.pi / 24, alive_time=10*60))
 
 # 1000 ~ 1500
 data.insert(1000, AimmingEnemy(100, 10, shoot_time = 2, bullet_speed=10, alive_time=3*60, vy = 3))

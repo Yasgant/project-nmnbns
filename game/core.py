@@ -163,6 +163,20 @@ class game(Map):
         ans[round(self.player.x / 4), round(self.player.y / 4)] = 0.3
         return ans
     
+    def detect_enemy(self):
+        def dist(obj1, obj2):
+            return np.sqrt((obj1.x - obj2.x) ** 2 + (obj1.y - obj2.y) ** 2)
+        ans = np.array([999 for i in range(3)])
+        for enemy in self.enemy_list:
+            if enemy.y < self.player.y:
+                if -100 <= enemy.x - self.player.x <= 100:
+                    ans[1] = min(ans[1], dist(enemy, self.player))
+                elif self.player.x - enemy.x < -100:
+                    ans[0] = min(ans[0], dist(enemy, self.player))
+                elif self.player.x - enemy.x > 100:
+                    ans[2] = min(ans[2], dist(enemy, self.player))
+        return ans / 999
+    
     def get_enemies(self):
         ans = [0 for i in range(2000)]
         eys = []
