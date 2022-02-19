@@ -12,7 +12,7 @@ This project aims to implement an AI that can clear Mountain of Faith with no mi
 > - Replay module.
 
 > Problem:
-> - The AI trained is not clever enough to finish even the first stage.
+> - The training model does not converge.
 
 
 ## 风神录全避计划
@@ -28,4 +28,4 @@ This project aims to implement an AI that can clear Mountain of Faith with no mi
 > - 回放功能
 
 > 问题：
-> - 训练出的AI太蠢，不能达到避弹要求。
+> - 训练模型无法收敛。
