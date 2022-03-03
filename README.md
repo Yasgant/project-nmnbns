@@ -1,3 +1,7 @@
+Current Result:
+<p align="center"><img src="Samples/Clip1.gif"\></p>
+<p align="center"><img src="Samples/Clip2.gif"\></p>
+
 ## Project - No Miss No Bomb No Shooting in ~ Mountain of Faith ~
 
 This project aims to implement an AI that can clear Mountain of Faith with no misses, no bombs, and no shooting.
@@ -12,7 +16,8 @@ This project aims to implement an AI that can clear Mountain of Faith with no mi
 > - Replay module.
 
 > Problem:
-> - The training model does not converge.
+> - This AI can only handle sparse bullets.
+> - Need more improvements in training time and model.
 
 
 ## 风神录全避计划
@@ -28,4 +33,5 @@ This project aims to implement an AI that can clear Mountain of Faith with no mi
 > - 回放功能
 
 > 问题：
-> - 训练模型无法收敛。
+> - AI只能处理稀疏弹幕
+> - 需要更多时间训练模型，并需要改进模型
