@@ -6,9 +6,11 @@ Current Result:
 
 This project aims to implement an AI that can clear Mountain of Faith with no misses, no bombs, and no shooting.
 
+At this stage, the AI is implemented in DQN and performs well in handling sparse bullets.
+
 ##### The project is now paused...
 ###### Current situation:
-> Finshed:
+> Finished:
 > - The data transfer from game to AI.
 > - The interact module for AI to control the game.
 > - The simulation module to train the AI.
@@ -23,6 +25,9 @@ This project aims to implement an AI that can clear Mountain of Faith with no mi
 ## 风神录全避计划
 
 此project将会实现一个能够在风神录无miss无雷并且不射击通关全6面的AI.
+
+目前AI以DQN实现，并且能够很好的躲避稀疏的弹幕.
+
 ##### 项目停滞中...
 ###### 目前情况：
 > 完成：
